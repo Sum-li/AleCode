@@ -78,7 +78,9 @@ func (e *etcdRegistry) Register(ctx context.Context, service *Service) (err erro
 
 //服务注销
 func (e *etcdRegistry) UnRegister(ctx context.Context, service *Service) (err error) {
+	e.lock.Lock()
 	delete(e.serviceMap, service.Name)
+	e.lock.Unlock()
 	return
 }
 
